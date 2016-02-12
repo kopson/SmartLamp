@@ -1,7 +1,13 @@
 # SmartLamp
+
 Arduino Smart Lamp
 
+#Arduino 1.6.6 IDE download
+
+https://www.arduino.cc/en/Main/Software
+
 #Arduino configuration for Ubuntu 12.04
+
 Add followiing lines to ~/.bashrc:
 
 export PATH=$PATH:~/Downloads/arduino-1.6.6
@@ -17,6 +23,16 @@ enableUSB()
 
 alias enableusb='enableUSB'
 
+#Running Arduino
+
+	$ arduino
+
+#Arduino workspace
+
+~/Arduino
+	+-libraries 
+	+-sketches
+
 #Troubleshooting
 
 Arduino IDE shows:
@@ -26,3 +42,15 @@ Arduino IDE shows:
 Solution:
 	$ enableusb
 
+#Fritzing
+
+http://fritzing.org/download/
+
+#Resources
+
+https://www.arduino.cc/en/Guide/HomePage
+http://fritzing.org/learning/
+http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html
+http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936
+http://www.instructables.com/tag/type-id/category-technology/channel-arduino/
+https://www.arduino.cc/en/Tutorial/HomePage
