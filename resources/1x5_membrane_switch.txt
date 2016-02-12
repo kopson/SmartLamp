@@ -3,3 +3,6 @@ MENU  - 47k       - A3
 LEFT  - 10k       - A3
 POWER - 47k + 47k - A3
 RIGHT - 22k + 47k - A3
+GND   - 100k      - A3
+VCC   -           - 5V
+LED   - 22k       - GND
