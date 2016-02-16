@@ -4,9 +4,9 @@ Arduino Smart Lamp project
 
 ###Environment setup
 
-*Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)
-*Download [Fritzing](http://fritzing.org/download/)
-*Arduino configuration for Ubuntu 12.04
+*Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)*
+*Download [Fritzing](http://fritzing.org/download/)*
+*Arduino configuration for Ubuntu 12.04*
 
 	Add followiing lines to **~/.bashrc**:
 
@@ -26,33 +26,39 @@ enableUSB()
 
 alias enableusb='enableUSB'
 alias arduino='$ARDUINO_HOME/arduino'
-alias fritzing='$FRITZING_HOME/Fritzing'```
+alias fritzing='$FRITZING_HOME/Fritzing'
+```
 
 ###Arduino IDE
 
-*Running Arduino:
+*Running Arduino:*
 
-```$ arduino```
+```$ arduino
+```
 
-*Running Fritzing:
+*Running Fritzing:*
 
-```$ fritzing```
+```$ fritzing
+```
 
-*Arduino workspace
+*Arduino workspace*
 
 ```~/Arduino
 	+-libraries 
-	+-sketches```
+	+-sketches
+```
 
 ###Troubleshooting
 
-*Arduino IDE shows:
+*Arduino IDE shows:*
 ```avrdude: ser_open(): can't open device "/dev/ttyACM0": Device or resource busy
-ioctl("TIOCMGET"): Inappropriate ioctl for device```
+ioctl("TIOCMGET"): Inappropriate ioctl for device
+```
 
-Solution:
+**Solution:**
 
-```$ enableusb```
+```$ enableusb
+```
 
 ####Stable code releases
 
