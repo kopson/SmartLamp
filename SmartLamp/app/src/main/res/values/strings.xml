@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SmartLamp</string>
+    <string name="water_temp">Temperatura wody</string>
+    <string name="lamp_temp">Temperatura lampy</string>
+
+    <string name="LED_PIN_1">10</string>
+    <string name="LED_PIN_2">11</string>
+    <string name="LED_PIN_3">12</string>
+
+    <string name="COOLER_PIN">13</string>
+
+    <string name="TEMP_PIN_1">14</string>
+    <string name="TEMP_PIN_2">15</string>
+
+    <string name="ip_address">172.16.44.225</string>
+    <string name="port_number">1234</string>
+
+</resources>

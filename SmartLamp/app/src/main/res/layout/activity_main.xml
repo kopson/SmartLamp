@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.piko.kopson.smartlamp.MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sekcja 1"
+                    android:id="@+id/section_1" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/section_bar_1"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="0"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:id="@+id/section_txt_1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sekcja 2"
+                    android:id="@+id/section_2" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/section_bar_2"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="0"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:id="@+id/section_txt_2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sekcja 3"
+                    android:id="@+id/section_3" />
+
+                <SeekBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/section_bar_3"
+                    android:layout_weight="1"
+                    android:max="100"
+                    android:progress="0"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:id="@+id/section_txt_3" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="0.00"
+                    android:id="@+id/temp_1"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:textColor="#d50000"
+                    android:textIsSelectable="false"
+                    android:layout_marginTop="10dp"
+                    android:minWidth="60dp"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="39dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="C"
+                    android:id="@+id/temp_2"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/temp_1"
+                    android:layout_toEndOf="@+id/temp_1"
+                    android:textColor="#d50000"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="o"
+                    android:id="@+id/temp_3"
+                    android:layout_toRightOf="@+id/temp_2"
+                    android:layout_toEndOf="@+id/temp_2"
+                    android:password="false"
+                    android:layout_alignTop="@+id/temp_2"
+                    android:textColor="#d50000"
+                    android:textIsSelectable="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="0.00"
+                    android:id="@+id/temp_4"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:minWidth="60dp"
+                    android:nestedScrollingEnabled="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="37dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="C"
+                    android:id="@+id/temp_5"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="o"
+                    android:id="@+id/temp_6" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/cooler"
+                    style="@style/SwitchButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:kswBackDrawable="@drawable/ios_back_drawable"
+                    app:kswBackMeasureRatio="2.2"
+                    app:kswThumbDrawable="@drawable/ios_off"
+                    app:kswThumbHeight="26dp"
+                    app:kswThumbWidth="26dp"
+                    android:clickable="true"
+                    android:layout_marginLeft="20dp" />
+
+                <ImageView
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:id="@+id/imageView"
+                    android:src="@drawable/fan"/>
+
+
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/graph_layout">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
