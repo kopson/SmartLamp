@@ -39,17 +39,16 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 
 * Arduino workspace
 
-	`~/Arduino`
-	`	+-libraries`
-	`	+-sketches`
+		~/Arduino
+			+-libraries
+			+-sketches
 
 ### Troubleshooting
 
 * Arduino IDE shows:
 
-```avrdude: ser_open(): can't open device "/dev/ttyACM0": 
-Device or resource busy ioctl("TIOCMGET"): Inappropriate ioctl for device
-```
+		avrdude: ser_open(): can't open device "/dev/ttyACM0": 
+		Device or resource busy ioctl("TIOCMGET"): Inappropriate ioctl for device
 
 **Solution:**
 
