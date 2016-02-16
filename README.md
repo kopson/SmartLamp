@@ -52,7 +52,7 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 
 **Solution:**
 
-	`$ enableusb`
+		$ enableusb
 
 #### Stable code releases
 
