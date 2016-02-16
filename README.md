@@ -2,13 +2,13 @@
 
 Arduino Smart Lamp project
 
-###Environment setup
+### Environment setup
 
-*Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)*
-*Download [Fritzing](http://fritzing.org/download/)*
-*Arduino configuration for Ubuntu 12.04*
+* Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)
+* Download [Fritzing](http://fritzing.org/download/)
+* Arduino configuration for Ubuntu 12.04
 
-	Add followiing lines to **~/.bashrc**:
+Add followiing lines to **~/.bashrc**:
 
 ```ARDUINO_HOME=~/Downloads/arduino-1.6.7
 FRITZING_HOME=~/Downloads/fritzing-0.9.2b
@@ -29,28 +29,28 @@ alias arduino='$ARDUINO_HOME/arduino'
 alias fritzing='$FRITZING_HOME/Fritzing'
 ```
 
-###Arduino IDE
+### Arduino IDE
 
-*Running Arduino:*
+* Running Arduino:
 
 ```$ arduino
 ```
 
-*Running Fritzing:*
+* Running Fritzing:
 
 ```$ fritzing
 ```
 
-*Arduino workspace*
+* Arduino workspace
 
 ```~/Arduino
 	+-libraries 
 	+-sketches
 ```
 
-###Troubleshooting
+### Troubleshooting
 
-*Arduino IDE shows:*
+* Arduino IDE shows:
 ```avrdude: ser_open(): can't open device "/dev/ttyACM0": Device or resource busy
 ioctl("TIOCMGET"): Inappropriate ioctl for device
 ```
@@ -60,13 +60,13 @@ ioctl("TIOCMGET"): Inappropriate ioctl for device
 ```$ enableusb
 ```
 
-####Stable code releases
+#### Stable code releases
 
 | Lamp ID            | Arduino ID | Branch    | Version |
 | :----------------: | :--------: | :-------: | :-----: |
 | Luna               | UNO        | Lamp-Luna | 1.0.0   |
 
-###Links
+### Links
 
 [Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
 [Arduino tutorials](https://www.arduino.cc/en/Tutorial/HomePage)
