@@ -1,17 +1,20 @@
 # SmartLamp
 
-Arduino Smart Lamp
+Arduino Smart Lamp project
 
-#Arduino 1.6.6 IDE download
+###Environment setup
 
-https://www.arduino.cc/en/Main/Software
+*Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)
+*Download [Fritzing](http://fritzing.org/download/)
+*Arduino configuration for Ubuntu 12.04
 
-#Arduino configuration for Ubuntu 12.04
+	Add followiing lines to **~/.bashrc**:
 
-Add followiing lines to ~/.bashrc:
-
-export PATH=$PATH:~/Downloads/arduino-1.6.6
+```ARDUINO_HOME=~/Downloads/arduino-1.6.7
+FRITZING_HOME=~/Downloads/fritzing-0.9.2b
 JAVA_HOME=/usr/local/java/jdk1.7.0_75
+
+export PATH=$PATH:/home/piotrek/Downloads/android-sdk-linux/platform-tools:$ARDUINO_HOME:$FRITZING_HOME
 export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
 
 enableUSB()
@@ -22,35 +25,46 @@ enableUSB()
 }
 
 alias enableusb='enableUSB'
+alias arduino='$ARDUINO_HOME/arduino'
+alias fritzing='$FRITZING_HOME/Fritzing'```
 
-#Running Arduino
+###Arduino IDE
 
-	$ arduino
+*Running Arduino:
 
-#Arduino workspace
+```$ arduino```
 
-~/Arduino
+*Running Fritzing:
+
+```$ fritzing```
+
+*Arduino workspace
+
+```~/Arduino
 	+-libraries 
-	+-sketches
+	+-sketches```
 
-#Troubleshooting
+###Troubleshooting
 
-Arduino IDE shows:
-	avrdude: ser_open(): can't open device "/dev/ttyACM0": Device or resource busy
-	ioctl("TIOCMGET"): Inappropriate ioctl for device
+*Arduino IDE shows:
+```avrdude: ser_open(): can't open device "/dev/ttyACM0": Device or resource busy
+ioctl("TIOCMGET"): Inappropriate ioctl for device```
 
 Solution:
-	$ enableusb
 
-#Fritzing
+```$ enableusb```
 
-http://fritzing.org/download/
+####Stable code releases
 
-#Resources
+| Lamp ID            | Arduino ID | Branch    | Version |
+| :----------------: | :--------: | :-------: | :-----: |
+| Luna               | UNO        | Lamp-Luna | 1.0.0   |
 
-https://www.arduino.cc/en/Guide/HomePage
-http://fritzing.org/learning/
-http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html
-http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936
-http://www.instructables.com/tag/type-id/category-technology/channel-arduino/
-https://www.arduino.cc/en/Tutorial/HomePage
+###Links
+
+[Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
+[Arduino tutorials](https://www.arduino.cc/en/Tutorial/HomePage)
+[Fritzing home page](http://fritzing.org/learning/)
+[Arduino tutorial - nettigo](http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html)
+[Arduino tutorial - forbot](http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936)
+[Arduino projects](http://www.instructables.com/tag/type-id/category-technology/channel-arduino/)
