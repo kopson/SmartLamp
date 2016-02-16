@@ -2,13 +2,11 @@
 
 Arduino Smart Lamp project
 
-### Environment setup
+### Environment setup for Ubuntu 12.04
 
 * Download [Arduino 1.6.7 IDE](https://www.arduino.cc/en/Main/Software)
 * Download [Fritzing](http://fritzing.org/download/)
-* Arduino configuration for Ubuntu 12.04
-
-Add followiing lines to **~/.bashrc**:
+* Add followiing lines to **~/.bashrc**:
 
 ```ARDUINO_HOME=~/Downloads/arduino-1.6.7
 FRITZING_HOME=~/Downloads/fritzing-0.9.2b
@@ -33,32 +31,29 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 
 * Running Arduino:
 
-```$ arduino
-```
+	$ arduino
 
 * Running Fritzing:
 
-```$ fritzing
-```
+	$ fritzing
 
 * Arduino workspace
 
-```~/Arduino
-	+-libraries 
-	+-sketches
-```
+	~/Arduino
+		+-libraries 
+		+-sketches
 
 ### Troubleshooting
 
 * Arduino IDE shows:
+
 ```avrdude: ser_open(): can't open device "/dev/ttyACM0": Device or resource busy
 ioctl("TIOCMGET"): Inappropriate ioctl for device
 ```
 
 **Solution:**
 
-```$ enableusb
-```
+	$ enableusb
 
 #### Stable code releases
 
@@ -69,8 +64,14 @@ ioctl("TIOCMGET"): Inappropriate ioctl for device
 ### Links
 
 [Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
+
 [Arduino tutorials](https://www.arduino.cc/en/Tutorial/HomePage)
+
 [Fritzing home page](http://fritzing.org/learning/)
+
 [Arduino tutorial - nettigo](http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html)
+
 [Arduino tutorial - forbot](http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936)
+
 [Arduino projects](http://www.instructables.com/tag/type-id/category-technology/channel-arduino/)
+
