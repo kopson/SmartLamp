@@ -1,8 +1,10 @@
 # DS18B20
 
-* GND - masa zasilania
-* DQ - sygnał do komunikacji z kontrolerem (wyjście typu otwarty dren)
-* VDD - zasilanie od 3 do 5,5 V
+Nonblocking library.
+
+* GND 	- ground
+* DQ 	- microcontroller communication channel (open drain)
+* VDD 	- power supply from 3 to 5.5 V
 
 ### References:
 

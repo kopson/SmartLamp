@@ -10,8 +10,10 @@ Arduino Smart Lamp project
 
 ```bash
 ARDUINO_HOME=~/Downloads/arduino-1.6.7
+ARDUINO_WORKSPACE=~/Arduino
 FRITZING_HOME=~/Downloads/fritzing-0.9.2b
 JAVA_HOME=/usr/local/java/jdk1.7.0_75
+REPO=~/SmartLamp
 
 export PATH=$PATH:/home/piotrek/Downloads/android-sdk-linux/platform-tools:$ARDUINO_HOME:$FRITZING_HOME
 export PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
@@ -45,6 +47,15 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 	+-libraries
 	+-sketches
 ```
+
+### Sublime-Stino alternative IDE
+
+* Download [Sublime-Text 3](https://www.sublimetext.com/3)
+* Install [Stino](https://github.com/Robot-Will/Stino)
+* Select Arduino Application Folder: **$ARDUINO_HOME**
+* Change Sketchbook Folder to **$REPO** folder
+* Make links from modules libraries dir to **$ARDUINO_WORKSPACE/libraries**
+* Restart sublime
 
 ### Troubleshooting
 
