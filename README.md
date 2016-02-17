@@ -8,7 +8,8 @@ Arduino Smart Lamp project
 * Download [Fritzing](http://fritzing.org/download/)
 * Add followiing lines to **~/.bashrc**:
 
-```ARDUINO_HOME=~/Downloads/arduino-1.6.7
+```bash
+ARDUINO_HOME=~/Downloads/arduino-1.6.7
 FRITZING_HOME=~/Downloads/fritzing-0.9.2b
 JAVA_HOME=/usr/local/java/jdk1.7.0_75
 
@@ -31,28 +32,32 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 
 * Running Arduino:
 
-	`$ arduino`
+`$ arduino`
 
 * Running Fritzing:
 
-	`$ fritzing`
+`$ fritzing`
 
 * Arduino workspace
 
-		~/Arduino
-			+-libraries
-			+-sketches
+```
+~/Arduino
+	+-libraries
+	+-sketches
+```
 
 ### Troubleshooting
 
 * Arduino IDE shows:
 
-		avrdude: ser_open(): can't open device "/dev/ttyACM0": 
-		Device or resource busy ioctl("TIOCMGET"): Inappropriate ioctl for device
+```
+avrdude: ser_open(): can't open device "/dev/ttyACM0": 
+Device or resource busy ioctl("TIOCMGET"): Inappropriate ioctl for device
+```
 
 **Solution:**
 
-	`$ enableusb`
+`$ enableusb`
 
 #### Stable code releases
 
@@ -62,15 +67,9 @@ alias fritzing='$FRITZING_HOME/Fritzing'
 
 ### Links
 
-[Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
-
-[Arduino tutorials](https://www.arduino.cc/en/Tutorial/HomePage)
-
-[Fritzing home page](http://fritzing.org/learning/)
-
-[Arduino tutorial - nettigo](http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html)
-
-[Arduino tutorial - forbot](http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936)
-
-[Arduino projects](http://www.instructables.com/tag/type-id/category-technology/channel-arduino/)
-
+1. [Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
+2. [Arduino tutorials](https://www.arduino.cc/en/Tutorial/HomePage)
+3. [Fritzing home page](http://fritzing.org/learning/)
+4. [Arduino tutorial - nettigo](http://akademia.nettigo.pl/playlist/arduino_dla_poczatkujacych.html)
+5. [Arduino tutorial - forbot](http://forbot.pl/blog/artykuly/programowanie/kurs-arduino-w-robotyce-1-wstep-id936)
+6. [Arduino projects](http://www.instructables.com/tag/type-id/category-technology/channel-arduino/)
