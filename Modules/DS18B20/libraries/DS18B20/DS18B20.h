@@ -6,7 +6,11 @@
 #include <avr/pgmspace.h>
 #include <OneWire.h>
 
-#define TEMP_ERROR -273.15f
+#define MIN_QUALITY   9
+#define MAX_QUALITY   12
+#define ADDR_SIZE     8
+#define TEMP_ERROR    -273.15f
+#define DS18B20_CHIP  0x28
 
 // Pointer type to an array in flash memory of device address
 #define FA( pgm_ptr ) ( reinterpret_cast< const __FlashStringHelper * >( pgm_ptr ) )
@@ -23,8 +27,8 @@ void __check(bool value, uint16_t line);
 class DS18B20
 {
 public:
-  DS18B20(OneWire *oneWire);
-  bool begin(uint8_t quality=12);
+  DS18B20(OneWire* oneWire);
+  bool begin(uint8_t quality = MAX_QUALITY);
   bool request(void);
   bool request(uint8_t *address);
   bool request(const __FlashStringHelper *_address);
