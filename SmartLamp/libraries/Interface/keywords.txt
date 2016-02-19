@@ -13,6 +13,8 @@ Interface	KEYWORD1
 initDisplay		KEYWORD2
 initTempSensor 	KEYWORD2
 displayTemp		KEYWORD2
+initRTC			KEYWORD2
+
 #######################################
 # Constants (LITERAL1)
 #######################################

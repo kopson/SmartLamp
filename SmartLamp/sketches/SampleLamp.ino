@@ -1,6 +1,7 @@
 #include <LiquidCrystal.h>
 #include <OneWire.h>
 #include <DS18B20.h>
+#include <DS3231.h>
 #include <Interface.h>
 
 // #### PINS ####
@@ -24,6 +25,7 @@ Interface interface;
 LiquidCrystal lcd(LCD_RS_PIN, LCD_E_PIN, LCD_D4_PIN, LCD_D5_PIN, LCD_D6_PIN, LCD_D7_PIN);
 OneWire oneWire(DS18B20_PIN);
 DS18B20 sensor(&oneWire);
+DS3231 rtc(SDA, SCL);
 
 // #### IMPLEMENTATION ####
 
@@ -34,8 +36,11 @@ void setup() {
 	
 	interface.initDisplay(&lcd, LCD_COLS, LCD_ROWS);
 	interface.initTempSensor(&sensor, address);
+	interface.initRTC(&rtc);
 }
 
 void loop() {
-	interface.displayTemp(LCD_ROWS - 1);
+	interface.displayDate(0);
+	interface.displayTemp(1);
+	delay(500);
 }
