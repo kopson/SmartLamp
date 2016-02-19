@@ -1,0 +1,19 @@
+#######################################
+# Syntax Coloring Map Interface
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+Interface	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+initDisplay		KEYWORD2
+initTempSensor 	KEYWORD2
+displayTemp		KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
+TEMP_ERROR	LITERAL1

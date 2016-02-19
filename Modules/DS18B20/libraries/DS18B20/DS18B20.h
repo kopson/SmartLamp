@@ -21,7 +21,6 @@
 // Teperature value exception catcher
 #define TE(a) __check(a != TEMP_ERROR, __LINE__)
 
-
 void __check(bool value, uint16_t line);
 
 class DS18B20

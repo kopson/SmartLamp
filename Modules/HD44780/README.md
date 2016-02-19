@@ -5,7 +5,7 @@
     V0 – regulacja kontrastu
     RS – wybór rejestrów (komenda, dane)
     RW – wybór opcji odczyt/zapis
-    E – zezwolenie na zapis do rejestrów
+    E – (Enable) zezwolenie na zapis do rejestrów
     D0 – dane
     D1 – dane
     D2 – dane
@@ -14,8 +14,8 @@
     D5 – dane
     D6 – dane
     D7 – dane
-    Vpod – zasilanie dodatnie podświetlenia
-    GNDpod – masa podświetlenia
+    Vpod – (A) zasilanie dodatnie podświetlenia
+    GNDpod – (K) masa podświetlenia
 
 ### References
 
