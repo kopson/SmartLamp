@@ -12,7 +12,9 @@
 #define LCD_D6_PIN  6
 #define LCD_D7_PIN  7
 
-#define DS18B20_PIN 8
+#define DS18B20_PIN     8
+#define LED_DRIVER_PIN  9
+#define SWITCH_PIN      A3
 
 // #### PARAMETERS ####
 #define LCD_ROWS 2
@@ -31,16 +33,23 @@ DS3231 rtc(SDA, SCL);
 
 // #### MAIN PART ####
 void setup() {
+#if DEBUG 
     while(!Serial);
     Serial.begin(9600);
-	
-	interface.initDisplay(&lcd, LCD_COLS, LCD_ROWS);
-	interface.initTempSensor(&sensor, address);
-	interface.initRTC(&rtc);
+#endif
+
+    interface.initDisplay(&lcd, LCD_COLS, LCD_ROWS);
+    interface.initTempSensor(&sensor, address);
+    interface.initRTC(&rtc);
+    interface.initSwitch(LED_DRIVER_PIN);
+    interface.displayDate(0);
+    interface.displayTemp(1);
+#if DEBUG     
+    Serial.println("Initialized");
+#endif    
 }
 
 void loop() {
-	interface.displayDate(0);
-	interface.displayTemp(1);
-	delay(500);
+    interface.handleSwitch(SWITCH_PIN);
+    delay(500);
 }
