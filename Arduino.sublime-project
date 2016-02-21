@@ -8,6 +8,10 @@
 		{
 			"follow_symlinks": true,
 			"path": "/home/piotrek/Downloads/arduino-1.6.7/examples/02.Digital/StateChangeDetection"
+		},
+		{
+			"follow_symlinks": true,
+			"path": "/home/piotrek/Downloads/arduino-1.6.7/examples/01.Basics/Fade"
 		}
 	]
 }

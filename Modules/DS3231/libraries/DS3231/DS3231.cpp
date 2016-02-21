@@ -56,8 +56,6 @@ Time::Time()
 	this->date = 1;
 	this->hour = 0;
 	this->min  = 0;
-	this->sec  = 0;
-	this->dow  = 3;
 }
 
 DS3231::DS3231(uint8_t data_pin, uint8_t sclk_pin)
@@ -70,247 +68,77 @@ Time DS3231::getTime()
 {
 	Time t;
 	_burstRead();
-	t.sec	= _decode(_burstArray[0]);
 	t.min	= _decode(_burstArray[1]);
 	t.hour	= _decodeH(_burstArray[2]);
-	t.dow	= _burstArray[3];
 	t.date	= _decode(_burstArray[4]);
 	t.mon	= _decode(_burstArray[5]);
 	t.year	= _decodeY(_burstArray[6])+2000;
 	return t;
 }
 
-void DS3231::setTime(uint8_t hour, uint8_t min, uint8_t sec)
+void DS3231::set(uint8_t date, byte what)
 {
-	if (((hour>=0) && (hour<24)) && ((min>=0) && (min<60)) && ((sec>=0) && (sec<60)))
+	switch(what)
 	{
-		_writeRegister(REG_HOUR, _encode(hour));
-		_writeRegister(REG_MIN, _encode(min));
-		_writeRegister(REG_SEC, _encode(sec));
+		case DS3231_DAY:
+			_writeRegister(REG_DATE, _encode(date));
+			break;
+		case DS3231_MONTH:	
+			_writeRegister(REG_MON, _encode(date));
+			break;
+		case DS3231_YEAR:	
+			_writeRegister(REG_YEAR, _encode(date));
+			break;
+		case DS3231_HOUR:	
+			_writeRegister(REG_HOUR, _encode(date));
+			break;
+		case DS3231_MIN:
+			_writeRegister(REG_MIN, _encode(date));
+			break;
 	}
 }
 
-void DS3231::setDate(uint8_t date, uint8_t mon, uint16_t year)
+char *DS3231::getDateTimeStr()
 {
-	if (((date>0) && (date<=31)) && ((mon>0) && (mon<=12)) && ((year>=2000) && (year<3000)))
-	{
-		year -= 2000;
-		_writeRegister(REG_YEAR, _encode(year));
-		_writeRegister(REG_MON, _encode(mon));
-		_writeRegister(REG_DATE, _encode(date));
-	}
-}
-
-void DS3231::setDOW()
-{
-	int dow;
-	byte mArr[12] = {6,2,2,5,0,3,5,1,4,6,2,4};
-	Time _t = getTime();
-  
-	dow = (_t.year % 100);
-	dow = dow*1.25;
-	dow += _t.date;
-	dow += mArr[_t.mon-1];
-	if (((_t.year % 4)==0) && (_t.mon<3))
-		dow -= 1;
-	while (dow>7)
-		dow -= 7;
-	_writeRegister(REG_DOW, dow);
-}
-
-void DS3231::setDOW(uint8_t dow)
-{
-	if ((dow>0) && (dow<8))
-		_writeRegister(REG_DOW, dow);
-}
-
-char *DS3231::getTimeStr(uint8_t format)
-{
-	static char output[] = "xxxxxxxx";
-	Time t;
-	t=getTime();
-	if (t.hour<10)
-		output[0]=48;
-	else
-		output[0]=char((t.hour / 10)+48);
-	output[1]=char((t.hour % 10)+48);
-	output[2]=58;
-	if (t.min<10)
-		output[3]=48;
-	else
-		output[3]=char((t.min / 10)+48);
-	output[4]=char((t.min % 10)+48);
-	output[5]=58;
-	if (format==FORMAT_SHORT)
-		output[5]=0;
-	else
-	{
-	if (t.sec<10)
-		output[6]=48;
-	else
-		output[6]=char((t.sec / 10)+48);
-	output[7]=char((t.sec % 10)+48);
-	output[8]=0;
-	}
-	return (char*)&output;
-}
-
-char *DS3231::getDateStr(uint8_t slformat, uint8_t eformat, char divider)
-{
-	static char output[] = "xxxxxxxxxx";
+	static char output[] = "dd/mm/yyyy hh:mm";
 	int yr, offset;
 	Time t;
 	t=getTime();
-	switch (eformat)
-	{
-		case FORMAT_LITTLEENDIAN:
-			if (t.date<10)
-				output[0]=48;
-			else
-				output[0]=char((t.date / 10)+48);
-			output[1]=char((t.date % 10)+48);
-			output[2]=divider;
-			if (t.mon<10)
-				output[3]=48;
-			else
-				output[3]=char((t.mon / 10)+48);
-			output[4]=char((t.mon % 10)+48);
-			output[5]=divider;
-			if (slformat==FORMAT_SHORT)
-			{
-				yr=t.year-2000;
-				if (yr<10)
-					output[6]=48;
-				else
-					output[6]=char((yr / 10)+48);
-				output[7]=char((yr % 10)+48);
-				output[8]=0;
-			}
-			else
-			{
-				yr=t.year;
-				output[6]=char((yr / 1000)+48);
-				output[7]=char(((yr % 1000) / 100)+48);
-				output[8]=char(((yr % 100) / 10)+48);
-				output[9]=char((yr % 10)+48);
-				output[10]=0;
-			}
-			break;
-		case FORMAT_BIGENDIAN:
-			if (slformat==FORMAT_SHORT)
-				offset=0;
-			else
-				offset=2;
-			if (slformat==FORMAT_SHORT)
-			{
-				yr=t.year-2000;
-				if (yr<10)
-					output[0]=48;
-				else
-					output[0]=char((yr / 10)+48);
-				output[1]=char((yr % 10)+48);
-				output[2]=divider;
-			}
-			else
-			{
-				yr=t.year;
-				output[0]=char((yr / 1000)+48);
-				output[1]=char(((yr % 1000) / 100)+48);
-				output[2]=char(((yr % 100) / 10)+48);
-				output[3]=char((yr % 10)+48);
-				output[4]=divider;
-			}
-			if (t.mon<10)
-				output[3+offset]=48;
-			else
-				output[3+offset]=char((t.mon / 10)+48);
-			output[4+offset]=char((t.mon % 10)+48);
-			output[5+offset]=divider;
-			if (t.date<10)
-				output[6+offset]=48;
-			else
-				output[6+offset]=char((t.date / 10)+48);
-			output[7+offset]=char((t.date % 10)+48);
-			output[8+offset]=0;
-			break;
-		case FORMAT_MIDDLEENDIAN:
-			if (t.mon<10)
-				output[0]=48;
-			else
-				output[0]=char((t.mon / 10)+48);
-			output[1]=char((t.mon % 10)+48);
-			output[2]=divider;
-			if (t.date<10)
-				output[3]=48;
-			else
-				output[3]=char((t.date / 10)+48);
-			output[4]=char((t.date % 10)+48);
-			output[5]=divider;
-			if (slformat==FORMAT_SHORT)
-			{
-				yr=t.year-2000;
-				if (yr<10)
-					output[6]=48;
-				else
-					output[6]=char((yr / 10)+48);
-				output[7]=char((yr % 10)+48);
-				output[8]=0;
-			}
-			else
-			{
-				yr=t.year;
-				output[6]=char((yr / 1000)+48);
-				output[7]=char(((yr % 1000) / 100)+48);
-				output[8]=char(((yr % 100) / 10)+48);
-				output[9]=char((yr % 10)+48);
-				output[10]=0;
-			}
-			break;
-	}
+
+	if (t.date<10)
+		output[0]=48;
+	else
+		output[0]=char((t.date / 10)+48);
+	output[1]=char((t.date % 10)+48);
+	output[2]='/';
+	if (t.mon<10)
+		output[3]=48;
+	else
+		output[3]=char((t.mon / 10)+48);
+	output[4]=char((t.mon % 10)+48);
+	output[5]='/';
+
+	yr=t.year;
+	output[6]=char((yr / 1000)+48);
+	output[7]=char(((yr % 1000) / 100)+48);
+	output[8]=char(((yr % 100) / 10)+48);
+	output[9]=char((yr % 10)+48);
+	output[10]=' ';
+
+	if (t.hour<10)
+		output[11]=48;
+	else
+		output[11]=char((t.hour / 10)+48);
+	output[12]=char((t.hour % 10)+48);
+	output[13]=58;
+	if (t.min<10)
+		output[14]=48;
+	else
+		output[14]=char((t.min / 10)+48);
+	output[15]=char((t.min % 10)+48);
+	output[16]=0;
+
 	return (char*)&output;
-}
-
-char *DS3231::getDOWStr(uint8_t format)
-{
-	char *output = "xxxxxxxxxx";
-	char *daysLong[]  = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
-	char *daysShort[] = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-	Time t;
-	t=getTime();
-	if (format == FORMAT_SHORT)
-		output = daysShort[t.dow-1];
-	else
-		output = daysLong[t.dow-1];
-	return output;
-}
-
-char *DS3231::getMonthStr(uint8_t format)
-{
-	char *output= "xxxxxxxxx";
-	char *monthLong[]  = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-	char *monthShort[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-	Time t;
-	t=getTime();
-	if (format == FORMAT_SHORT)
-		output = monthShort[t.mon-1];
-	else
-		output = monthLong[t.mon-1];
-	return output;
-}
-
-long DS3231::getUnixTime(Time t)
-{
-	uint16_t	dc;
-
-	dc = t.date;
-	for (uint8_t i = 0; i<(t.mon-1); i++)
-		dc += dim[i];
-	if ((t.mon > 2) && (((t.year-2000) % 4) == 0))
-		++dc;
-	dc = dc + (365 * (t.year-2000)) + (((t.year-2000) + 3) / 4) - 1;
-
-	return ((((((dc * 24L) + t.hour) * 60) + t.min) * 60) + t.sec) + SEC_1970_TO_2000;
-
 }
 
 void DS3231::enable32KHz(bool enable)

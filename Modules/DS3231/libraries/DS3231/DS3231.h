@@ -52,6 +52,12 @@
 #define SATURDAY	6
 #define SUNDAY		7
 
+#define DS3231_DAY     1
+#define DS3231_MONTH   2
+#define DS3231_YEAR    3
+#define DS3231_HOUR    4
+#define DS3231_MIN     5
+
 #define SQW_RATE_1		0
 #define SQW_RATE_1K		1
 #define SQW_RATE_4K		2
@@ -65,11 +71,9 @@ class Time
 public:
 	uint8_t		hour;
 	uint8_t		min;
-	uint8_t		sec;
 	uint8_t		date;
 	uint8_t		mon;
 	uint16_t	year;
-	uint8_t		dow;
 
 	Time();
 };
@@ -80,16 +84,9 @@ class DS3231
 		DS3231(uint8_t data_pin, uint8_t sclk_pin);
 		void	begin();
 		Time	getTime();
-		void	setTime(uint8_t hour, uint8_t min, uint8_t sec);
-		void	setDate(uint8_t date, uint8_t mon, uint16_t year);
-		void	setDOW();
-		void	setDOW(uint8_t dow);
+		void 	set(uint8_t day, byte what);
 
-		char	*getTimeStr(uint8_t format=FORMAT_LONG);
-		char	*getDateStr(uint8_t slformat=FORMAT_LONG, uint8_t eformat=FORMAT_LITTLEENDIAN, char divider='.');
-		char	*getDOWStr(uint8_t format=FORMAT_LONG);
-		char	*getMonthStr(uint8_t format=FORMAT_LONG);
-		long	getUnixTime(Time t);
+		char	*getDateTimeStr();
 
 		void	enable32KHz(bool enable);
 		void	setOutput(byte enable);

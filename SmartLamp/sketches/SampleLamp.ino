@@ -3,6 +3,7 @@
 #include <DS18B20.h>
 #include <DS3231.h>
 #include <Interface.h>
+#include <MembraneSwitch.h>
 
 // #### PINS ####
 #define LCD_RS_PIN  2
@@ -28,6 +29,7 @@ LiquidCrystal lcd(LCD_RS_PIN, LCD_E_PIN, LCD_D4_PIN, LCD_D5_PIN, LCD_D6_PIN, LCD
 OneWire oneWire(DS18B20_PIN);
 DS18B20 sensor(&oneWire);
 DS3231 rtc(SDA, SCL);
+MembraneSwitch mSwitch(SWITCH_PIN);
 
 // #### IMPLEMENTATION ####
 
@@ -41,7 +43,7 @@ void setup() {
     interface.initDisplay(&lcd, LCD_COLS, LCD_ROWS);
     interface.initTempSensor(&sensor, address);
     interface.initRTC(&rtc);
-    interface.initSwitch(LED_DRIVER_PIN);
+    interface.initSwitch(LED_DRIVER_PIN, &mSwitch);
     interface.displayDate(0);
     interface.displayTemp(1);
 #if DEBUG     
@@ -50,6 +52,7 @@ void setup() {
 }
 
 void loop() {
-    interface.handleSwitch(SWITCH_PIN);
-    delay(500);
+    interface.handleSwitch();
+    //delay(500);
 }
+
