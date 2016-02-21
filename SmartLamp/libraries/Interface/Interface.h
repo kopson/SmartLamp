@@ -6,17 +6,24 @@
 #include <DS18B20.h>
 #include <DS3231.h>
 #include <MembraneSwitch.h>
+#include <Timer.h>
 
 #define DEBUG 0
 
 #define NORMAL          0
 #define MENU_SET_DATE   1
+#define MENU_SET_PROG   2
 
 #define DAY     0
 #define MONTH   3
 #define YEAR    6
 #define HOUR    11
 #define MIN     14
+
+#define MAX_PWM         200
+#define LCD_TIMEOUT     4000 //msec
+
+bool timeoutExpired;
 
 class Interface
 {
@@ -26,6 +33,7 @@ public:
     void displayTemp(const byte row);
     void initRTC(DS3231* rtc);
     void displayDate(const byte row);
+    void displayLED(bool increase);
     void handleSwitch();
     void handleMenu();
     void handlePower();
@@ -33,6 +41,7 @@ public:
     void handleLeft();
     void handleRight();
     void initSwitch(const byte ledPin, MembraneSwitch *mSwitch);
+    void setDate(bool increase); 
 
 private:
     LiquidCrystal *_lcd;
@@ -44,5 +53,8 @@ private:
     bool power;
     byte _outputPin;
     byte cursor;
+    byte brightness;
+    Timer _t;
+    byte timeoutEvent;
 };
 #endif

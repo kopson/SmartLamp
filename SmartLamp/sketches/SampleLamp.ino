@@ -4,6 +4,7 @@
 #include <DS3231.h>
 #include <Interface.h>
 #include <MembraneSwitch.h>
+#include <Timer.h>
 
 // #### PINS ####
 #define LCD_RS_PIN  2
@@ -44,8 +45,6 @@ void setup() {
     interface.initTempSensor(&sensor, address);
     interface.initRTC(&rtc);
     interface.initSwitch(LED_DRIVER_PIN, &mSwitch);
-    interface.displayDate(0);
-    interface.displayTemp(1);
 #if DEBUG     
     Serial.println("Initialized");
 #endif    
