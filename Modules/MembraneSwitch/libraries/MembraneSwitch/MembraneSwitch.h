@@ -24,18 +24,18 @@
 #define UNKNOWN_STATE 6
 #define RELEASE 0
 
+#define DELAY 100 
+
 class MembraneSwitch
 {
 public:
 	MembraneSwitch(const byte pin);
 	void begin();
-	byte getButton();
+	bool getButton(byte *button);
 	String toString(byte button);
-	bool available(byte button);
 private:
 	byte buttonPin;
-	byte buttonState;         // current state of the button
 	byte lastButtonState;     // previous state of the button
-	byte counter[UNKNOWN_STATE];
+ 	long lastDebounceTime;  // the last time the output pin was toggled
 };
 #endif

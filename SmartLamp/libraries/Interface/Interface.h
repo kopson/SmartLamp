@@ -23,8 +23,6 @@
 #define MAX_PWM         200
 #define LCD_TIMEOUT     4000 //msec
 
-bool timeoutExpired;
-
 class Interface
 {
 public:
@@ -42,7 +40,9 @@ public:
     void handleRight();
     void initSwitch(const byte ledPin, MembraneSwitch *mSwitch);
     void setDate(bool increase); 
-
+    void menuSetDate();
+    void menuSetProg();
+    void menuSetNorm();
 private:
     LiquidCrystal *_lcd;
     DS18B20 *_sensor;
@@ -56,5 +56,7 @@ private:
     byte brightness;
     Timer _t;
     byte timeoutEvent;
+    byte button;
+    byte program;
 };
 #endif

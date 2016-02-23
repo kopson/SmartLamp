@@ -6,42 +6,47 @@ MembraneSwitch::MembraneSwitch(const byte pin) {
 
 void MembraneSwitch::begin() {
     pinMode(buttonPin, INPUT);
-    for (byte i = 0; i < UNKNOWN_STATE; ++i) 
-        counter[i] = 0;
-    buttonState = 0;
     lastButtonState = 0;
+    lastDebounceTime = 0;
 }
 
-byte MembraneSwitch::getButton() {
+bool MembraneSwitch::getButton(byte *button) {
     int analogValue = analogRead(buttonPin);  
-    byte ret = 0;
+    byte tmpButtonState = 0;
+
     if (analogValue > AUTO_MIN && analogValue < AUTO_MAX) {     
-        if (counter[AUTO]++ >= 5)
-            buttonState = AUTO;  
+        tmpButtonState = AUTO;  
     } else if (analogValue > MENU_MIN && analogValue < MENU_MAX) {       
-        if (counter[MENU]++ >= 5)
-            buttonState = MENU;     
+        tmpButtonState = MENU;     
     } else if (analogValue > LEFT_MIN && analogValue < LEFT_MAX) {     
-        if (counter[LEFT]++ >= 5)
-            buttonState = LEFT; 
+        tmpButtonState = LEFT; 
     } else if (analogValue > RIGHT_MIN && analogValue < RIGHT_MAX) { 
-        if (counter[RIGHT]++ >= 5)
-            buttonState = RIGHT; 
+        tmpButtonState = RIGHT; 
     } else if (analogValue > POWER_MIN && analogValue < POWER_MAX) {    
-        if (counter[POWER]++ >= 5)
-            buttonState = POWER;     
+        tmpButtonState = POWER;     
     } else {     
-        buttonState = RELEASE; 
+        tmpButtonState = RELEASE; 
     }
 
-    if (buttonState != lastButtonState) {
-        for (byte i = 0; i < UNKNOWN_STATE; ++i) 
-            counter[i] = 0;
-        ret = buttonState;
-        delay(100);
+    // If the switch changed, due to noise or pressing:
+    if (tmpButtonState != lastButtonState) {
+        // reset the debouncing timer
+        lastDebounceTime = millis();
+        lastButtonState = tmpButtonState;
+    } 
+
+    if ((millis() - lastDebounceTime) > DELAY) {
+        // whatever the reading is at, it's been there for longer
+        // than the debounce delay, so take it as the actual current state:
+        //lastButtonState = 0;
+        if(*button != tmpButtonState) {
+            *button = tmpButtonState;
+            return true;
+        } else {
+            return false;
+        }
     }
-    lastButtonState = buttonState;
-    return ret;
+    return false;
 }
 
 String MembraneSwitch::toString(byte button) {
@@ -62,8 +67,4 @@ String MembraneSwitch::toString(byte button) {
             return "RELEASE"; 
     }
     return "";
-}
-
-bool MembraneSwitch::available(byte button) {
-	return button > RELEASE && button < UNKNOWN_STATE;
 }

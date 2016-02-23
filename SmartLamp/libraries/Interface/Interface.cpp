@@ -2,10 +2,14 @@
 
 #define TEM_PRECISION 2
 
+bool timeoutExpired = true;
+
 void Interface::initSwitch(const byte ledPin, MembraneSwitch *mSwitch) {
     _outputPin = ledPin;
     _switch = mSwitch;
     _switch->begin();
+    button = 0;
+    program = 0;
     pinMode(_outputPin, OUTPUT);
     brightness = 0;
     analogWrite(_outputPin, brightness);
@@ -86,8 +90,7 @@ void Interface::displayLED(bool increase) {
 }
 
 void Interface::handleSwitch() {
-    byte button = _switch->getButton();
-    if(_switch->available(button)) {       
+    if(_switch->getButton(&button)) {       
         switch(button) {
             case MENU:
                 handleMenu();
@@ -171,6 +174,14 @@ void Interface::handleLeft() {
         case MENU_SET_DATE:
             setDate(false);
         break;
+        case MENU_SET_PROG:
+            _lcd->setCursor(0, 1);
+            if(program > 1)
+                --program;
+            _lcd->print(program);
+            _lcd->setCursor(0, 1);
+            _lcd->blink();
+            break;
         case NORMAL:
             displayLED(false);
         break;
@@ -182,6 +193,14 @@ void Interface::handleRight() {
         case MENU_SET_DATE:
             setDate(true);
         break;
+        case MENU_SET_PROG:
+            _lcd->setCursor(0, 1);
+            if(program < 8)
+                ++program;
+            _lcd->print(program);
+            _lcd->setCursor(0, 1);
+            _lcd->blink();
+            break;
         case NORMAL:
             displayLED(true);
         break;
@@ -220,33 +239,49 @@ void Interface::handlePower() {
     }
 }
 
+void Interface::menuSetDate() {
+    state = MENU_SET_DATE;
+    _lcd->clear();
+    _lcd->setCursor(0, 0);
+    _lcd->print("SET DATE");
+    displayDate(1);
+    cursor = 0;
+    _lcd->setCursor(cursor, 1);
+    _lcd->blink(); 
+}
+
+void Interface::menuSetProg() {
+    state = MENU_SET_PROG;
+    _lcd->clear();
+    _lcd->setCursor(0, 0);
+    _lcd->print("SET PROGRAM");
+    _lcd->setCursor(0, 1);
+    _lcd->print(program);
+    _lcd->blink(); 
+}
+
+void Interface::menuSetNorm() {
+    state = NORMAL;
+    _lcd->clear();
+    _lcd->noBlink();
+    displayDate(0);
+    displayTemp(1);
+}
+
 void Interface::handleMenu() {
     switch(state) {
         case NORMAL:
-            state = MENU_SET_DATE;
-            _lcd->clear();
-            _lcd->setCursor(0, 0);
-            _lcd->print("SET DATE");
-            displayDate(1);
-            cursor = 0;
-            _lcd->setCursor(cursor, 1);
-            _lcd->blink();      
+            menuSetDate();
             break;
         case MENU_SET_DATE:
-           state = MENU_SET_PROG;
-            _lcd->clear();
-            _lcd->setCursor(0, 0);
-            _lcd->print("SET PROGRAM");
-            cursor = 0;
-            _lcd->setCursor(cursor, 1);
-            _lcd->blink(); 
+            if(cursor != 0) {
+                menuSetNorm(); 
+            } else {    
+                menuSetProg();
+            }
             break;   
         case MENU_SET_PROG:
-            state = NORMAL;
-            _lcd->clear();
-            _lcd->noBlink();
-            displayDate(0);
-            displayTemp(1);            
+            menuSetNorm();            
             break;
         default:
             _lcd->clear();          
