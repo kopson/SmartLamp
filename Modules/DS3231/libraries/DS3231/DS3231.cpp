@@ -45,15 +45,10 @@
 
 #define SEC_1970_TO_2000 946684800
 
-static const uint8_t dim[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
-
 /* Public */
 
 Time::Time()
 {
-	this->year = 2014;
-	this->mon  = 1;
-	this->date = 1;
 	this->hour = 0;
 	this->min  = 0;
 }
@@ -70,9 +65,6 @@ Time DS3231::getTime()
 	_burstRead();
 	t.min	= _decode(_burstArray[1]);
 	t.hour	= _decodeH(_burstArray[2]);
-	t.date	= _decode(_burstArray[4]);
-	t.mon	= _decode(_burstArray[5]);
-	t.year	= _decodeY(_burstArray[6])+2000;
 	return t;
 }
 
@@ -80,15 +72,6 @@ void DS3231::set(uint8_t date, byte what)
 {
 	switch(what)
 	{
-		case DS3231_DAY:
-			_writeRegister(REG_DATE, _encode(date));
-			break;
-		case DS3231_MONTH:	
-			_writeRegister(REG_MON, _encode(date));
-			break;
-		case DS3231_YEAR:	
-			_writeRegister(REG_YEAR, _encode(date));
-			break;
 		case DS3231_HOUR:	
 			_writeRegister(REG_HOUR, _encode(date));
 			break;
@@ -98,78 +81,28 @@ void DS3231::set(uint8_t date, byte what)
 	}
 }
 
-char *DS3231::getDateTimeStr()
+char *DS3231::getTimeStr()
 {
-	static char output[] = "dd/mm/yyyy hh:mm";
-	int yr, offset;
+	static char output[] = "hh:mm";
+
 	Time t;
-	t=getTime();
+	t = getTime();
 
-	if (t.date<10)
-		output[0]=48;
+	if (t.hour < 10)
+		output[0] = 48;
 	else
-		output[0]=char((t.date / 10)+48);
-	output[1]=char((t.date % 10)+48);
-	output[2]='/';
-	if (t.mon<10)
-		output[3]=48;
+		output[0] = char((t.hour / 10) + 48);
+	output[1] = char((t.hour % 10) + 48);
+	output[2] = 58;
+
+	if (t.min < 10)
+		output[3] = 48;
 	else
-		output[3]=char((t.mon / 10)+48);
-	output[4]=char((t.mon % 10)+48);
-	output[5]='/';
+		output[3] = char((t.min / 10) + 48);
+	output[4] = char((t.min % 10) + 48);
+	output[5] = 0;
 
-	yr=t.year;
-	output[6]=char((yr / 1000)+48);
-	output[7]=char(((yr % 1000) / 100)+48);
-	output[8]=char(((yr % 100) / 10)+48);
-	output[9]=char((yr % 10)+48);
-	output[10]=' ';
-
-	if (t.hour<10)
-		output[11]=48;
-	else
-		output[11]=char((t.hour / 10)+48);
-	output[12]=char((t.hour % 10)+48);
-	output[13]=58;
-	if (t.min<10)
-		output[14]=48;
-	else
-		output[14]=char((t.min / 10)+48);
-	output[15]=char((t.min % 10)+48);
-	output[16]=0;
-
-	return (char*)&output;
-}
-
-void DS3231::enable32KHz(bool enable)
-{
-  uint8_t _reg = _readRegister(REG_STATUS);
-  _reg &= ~(1 << 3);
-  _reg |= (enable << 3);
-  _writeRegister(REG_STATUS, _reg);
-}
-
-void DS3231::setOutput(byte enable)
-{
-  uint8_t _reg = _readRegister(REG_CON);
-  _reg &= ~(1 << 2);
-  _reg |= (enable << 2);
-  _writeRegister(REG_CON, _reg);
-}
-
-void DS3231::setSQWRate(int rate)
-{
-  uint8_t _reg = _readRegister(REG_CON);
-  _reg &= ~(3 << 3);
-  _reg |= (rate << 3);
-  _writeRegister(REG_CON, _reg);
-}
-
-float DS3231::getTemp()
-{
-	uint8_t _msb = _readRegister(REG_TEMPM);
-	uint8_t _lsb = _readRegister(REG_TEMPL);
-	return (float)_msb + ((_lsb >> 6) * 0.25f);
+	return (char*) &output;
 }
 
 /* Private */

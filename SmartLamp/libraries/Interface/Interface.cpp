@@ -1,96 +1,86 @@
 #include "Interface.h"
 
-#define TEM_PRECISION 2
-
-bool timeoutExpired = true;
-
 void Interface::initSwitch(const byte ledPin, MembraneSwitch *mSwitch) {
-    _outputPin = ledPin;
+    _outputPin[0] = ledPin;
+    _outputPin[1] = ledPin;
+    _outputPin[2] = ledPin;
     _switch = mSwitch;
     _switch->begin();
     button = 0;
-    program = 0;
-    pinMode(_outputPin, OUTPUT);
-    brightness = 0;
-    analogWrite(_outputPin, brightness);
-#if DEBUG
-    Serial.println("Interface::initSwitch");
-#endif
+    _program = 0;
+
+    for (int i = 0; i < 3; ++i) {
+        _brightness[i] = 0;
+        pinMode(_outputPin[i], OUTPUT);
+        analogWrite(_outputPin[i], _brightness[i]);
+    }
 }
 
 void Interface::initDisplay(LiquidCrystal *lcd, const byte cols, const byte rows) {
     _lcd = lcd;
-    cursor = 0;
+    _cursor = 0;
     state = NORMAL;
     power = true;
     _lcd->begin(cols, rows);
     _lcd->clear();
-    timeoutEvent = 0;
-#if DEBUG
-    Serial.println("Interface::initDisplay");
-#endif
+    displayLED();
 }
 
 void Interface::initTempSensor(DS18B20 *sensor, const byte *addr) {
     _sensor = sensor;
     _addr = addr;
     _sensor->begin();
-    _sensor->request(FA(_addr));
-    timeoutExpired = true;
-#if DEBUG
-    Serial.println("Interface::initTempSensor");
-#endif    
+    _sensor->request(FA(_addr));  
 }
 
 void Interface::initRTC(DS3231* rtc) {
     _rtc = rtc;
-    _rtc->begin();
-#if DEBUG    
-    Serial.println("Interface::initRTC");
-#endif    
+    _rtc->begin(); 
 }
 
-void Interface::displayTemp(const byte row) {
+void Interface::displayTimeTemp() {
+    static byte temp = 0;
+    _lcd->setCursor(0, 0);
+    _lcd->print(_rtc->getTimeStr());
+    _lcd->print(" ");
+
     if (_sensor->available()) {
-        float temperature = _sensor->readTemperature(FA(_addr));
+        temp = _sensor->readTemperature(FA(_addr));
+        _sensor->request(FA(_addr));   
+    }
+    _lcd->print(String(temp) + "'C");
+    _lcd->print(" ");
+    if (_program > 0) {
+        _lcd->print("P" + _program);
+    } 
+}
 
-        _lcd->setCursor(0, row);
-        _lcd->print(String(temperature, TEM_PRECISION) + " 'C");
-
-        _sensor->request(FA(_addr));
-#if DEBUG        
-        Serial.println("Interface::displayTemp");
-#endif        
+void Interface::displayLED(){
+    _lcd->setCursor(0, 1);
+    for(int i = 0; i < 3; ++i) {
+    if (_cursor == i)
+        _lcd->print("#" + String(_brightness[i] / 2) + "% ");
+    else
+        _lcd->print(" " + String(_brightness[i] / 2) + "% ");
     }
 }
 
-void Interface::displayDate(const byte row) {
-    _lcd->setCursor(0, row);
-    _lcd->print(_rtc->getDateTimeStr());
-#if DEBUG    
-    Serial.println("Interface::displayDate");
-#endif    
-}
-
-void initLCDTemp() {
-    timeoutExpired = true;
-}
-
-void Interface::displayLED(bool increase) {
-    if(increase && brightness < MAX_PWM)
-        brightness += 2;
-    else if(!increase && brightness > 0)
-        brightness -=2;
-    analogWrite(_outputPin, brightness);
-    _t.stop(timeoutEvent); 
-    timeoutEvent = _t.after(LCD_TIMEOUT, initLCDTemp);
+void Interface::displayTime() {
     _lcd->setCursor(0, 1);
-    _lcd->print(String(brightness / 2) + " %         ");
-    timeoutExpired = false;
+    _lcd->print(_rtc->getTimeStr()); 
+}
+
+void Interface::setLED(bool increase, byte i) {
+    if (increase && _brightness[i] < MAX_PWM)
+        _brightness[i] += 2;
+    else if (!increase && _brightness[i] > 0)
+        _brightness[i] -= 2;
+    analogWrite(_outputPin[i], _brightness[i]);
+    displayLED();
 }
 
 void Interface::handleSwitch() {
-    if(_switch->getButton(&button)) {       
+    if (_switch->getButton(&button)) {       
         switch(button) {
             case MENU:
                 handleMenu();
@@ -106,48 +96,21 @@ void Interface::handleSwitch() {
                 break;
             case RIGHT:
                 handleRight();       
-                break; 
+                break;
         }
     } else {
-        if(state == NORMAL) {
-            displayDate(0);
-            if(timeoutExpired)
-                displayTemp(1);
+        if (state == NORMAL) {
+            displayTimeTemp();
         }
     }
-    _t.update();
 }
 
-void Interface::setDate(bool increase) {
+void Interface::setTime(bool increase) {
     uint8_t date;
-    switch(cursor) {
-        case DAY:
-            date = _rtc->getTime().date;
-            if(!increase && date > 1)
-                --date;
-            else if(increase && date < 31)
-                ++date;
-            _rtc->set(date, DS3231_DAY);
-            break;
-        case MONTH:
-            date = _rtc->getTime().mon;
-            if(!increase && date > 1)
-                --date;
-            else if (increase && date < 12)
-                ++date;
-            _rtc->set(date, DS3231_MONTH);
-            break;
-        case YEAR:
-            date = _rtc->getTime().year;
-            if(!increase && date > 1)
-                --date;
-            else if (increase)
-                ++date;
-            _rtc->set(date + 2000, DS3231_YEAR);
-            break;
+    switch (_cursor) {
         case HOUR:
             date = _rtc->getTime().hour;
-            if(!increase && date > 0)
+            if (!increase && date > 0)
                 --date;
             else if (increase && date < 24)
                 ++date;
@@ -155,7 +118,7 @@ void Interface::setDate(bool increase) {
             break;
         case MIN:
             date = _rtc->getTime().min;
-            if(!increase && date > 0)
+            if (!increase && date > 0)
                 --date;
             else if (increase && date < 60)
                 ++date;
@@ -164,65 +127,65 @@ void Interface::setDate(bool increase) {
         default:
             break;  
     }
-    displayDate(1);
-    _lcd->setCursor(cursor, 1);
+    displayTime();
+    _lcd->setCursor(_cursor, 1);
     _lcd->blink();
 }
 
 void Interface::handleLeft() {
-    switch(state) {
+    switch (state) {
         case MENU_SET_DATE:
-            setDate(false);
-        break;
+            setTime(false);
+            break;
         case MENU_SET_PROG:
             _lcd->setCursor(0, 1);
-            if(program > 1)
-                --program;
-            _lcd->print(program);
-            _lcd->setCursor(0, 1);
-            _lcd->blink();
+            if (_program > 0)
+                --_program;
+            _lcd->print(_program);
             break;
         case NORMAL:
-            displayLED(false);
-        break;
+            setLED(false, _cursor);
+            break;
     }
 }
 
 void Interface::handleRight() {
-    switch(state) {
+    switch (state) {
         case MENU_SET_DATE:
-            setDate(true);
-        break;
+            setTime(true);
+            break;
         case MENU_SET_PROG:
             _lcd->setCursor(0, 1);
-            if(program < 8)
-                ++program;
-            _lcd->print(program);
-            _lcd->setCursor(0, 1);
-            _lcd->blink();
+            if (_program < 8)
+                ++_program;
+            _lcd->print(_program);
             break;
         case NORMAL:
-            displayLED(true);
-        break;
+            setLED(true, _cursor);
+            break;
     }
 }
 
 void Interface::handleAuto() {
-    switch(state) {
+    switch (state) {
+        case NORMAL:
+            if (_cursor == LED1) {
+                _cursor = LED2;
+            } else if (_cursor == LED2) {
+                _cursor = LED3;
+            } else if (_cursor == LED3) {
+                _cursor = LED1;
+            }
+            displayLED();
+            break;
         case MENU_SET_DATE:
-            if (cursor == DAY) {
-                cursor = MONTH;    
-            } else if (cursor == MONTH) {
-                cursor = YEAR;
-            } else if (cursor == YEAR) {
-                cursor = HOUR; 
-            } else if (cursor == HOUR) {
-                cursor = MIN;
-            } else if (cursor == MIN) {
-                cursor = DAY;
+            if (_cursor == HOUR) {
+                _cursor = MIN;
+            } else if (_cursor == MIN) {
+                _cursor = HOUR;
             }
 
-            _lcd->setCursor(cursor, 1);
+            _lcd->setCursor(_cursor, 1);
             _lcd->blink();
             break;
     }
@@ -230,23 +193,28 @@ void Interface::handleAuto() {
 
 void Interface::handlePower() {
     power = !power;
-    if(!power) {
+    if (!power) {
         _lcd->noDisplay();
-        analogWrite(_outputPin, 0);
+        for (int i = 0; i < 3; ++i) {
+            analogWrite(_outputPin[i], 0);
+        }
     } else {
         _lcd->display();
-        analogWrite(_outputPin, brightness);
+        for (int i = 0; i < 3; ++i) {
+            analogWrite(_outputPin[i], _brightness[i]);
+        }
+        menuSetNorm();
     }
 }
 
-void Interface::menuSetDate() {
+void Interface::menuSetTime() {
     state = MENU_SET_DATE;
     _lcd->clear();
     _lcd->setCursor(0, 0);
-    _lcd->print("SET DATE");
-    displayDate(1);
-    cursor = 0;
-    _lcd->setCursor(cursor, 1);
+    _lcd->print("SET TIME");
+    displayTime();
+    _cursor = 0;
+    _lcd->setCursor(_cursor, 1);
     _lcd->blink(); 
 }
 
@@ -256,25 +224,23 @@ void Interface::menuSetProg() {
     _lcd->setCursor(0, 0);
     _lcd->print("SET PROGRAM");
     _lcd->setCursor(0, 1);
-    _lcd->print(program);
-    _lcd->blink(); 
+    _lcd->print(_program);
+    _lcd->noBlink(); 
 }
 
 void Interface::menuSetNorm() {
     state = NORMAL;
-    _lcd->clear();
-    _lcd->noBlink();
-    displayDate(0);
-    displayTemp(1);
+    displayTimeTemp();
+    displayLED();
 }
 
 void Interface::handleMenu() {
-    switch(state) {
+    switch (state) {
         case NORMAL:
-            menuSetDate();
+            menuSetTime();
             break;
         case MENU_SET_DATE:
-            if(cursor != 0) {
+            if (_cursor != 0) {
                 menuSetNorm(); 
             } else {    
                 menuSetProg();

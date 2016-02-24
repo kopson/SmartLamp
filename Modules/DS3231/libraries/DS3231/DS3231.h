@@ -37,26 +37,8 @@
 #define DS3231_ADDR_W	0xD0
 #define DS3231_ADDR		0x68
 
-#define FORMAT_SHORT	1
-#define FORMAT_LONG		2
-
-#define FORMAT_LITTLEENDIAN	1
-#define FORMAT_BIGENDIAN	2
-#define FORMAT_MIDDLEENDIAN	3
-
-#define MONDAY		1
-#define TUESDAY		2
-#define WEDNESDAY	3
-#define THURSDAY	4
-#define FRIDAY		5
-#define SATURDAY	6
-#define SUNDAY		7
-
-#define DS3231_DAY     1
-#define DS3231_MONTH   2
-#define DS3231_YEAR    3
-#define DS3231_HOUR    4
-#define DS3231_MIN     5
+#define DS3231_HOUR    1
+#define DS3231_MIN     2
 
 #define SQW_RATE_1		0
 #define SQW_RATE_1K		1
@@ -71,10 +53,6 @@ class Time
 public:
 	uint8_t		hour;
 	uint8_t		min;
-	uint8_t		date;
-	uint8_t		mon;
-	uint16_t	year;
-
 	Time();
 };
 
@@ -85,14 +63,7 @@ class DS3231
 		void	begin();
 		Time	getTime();
 		void 	set(uint8_t day, byte what);
-
-		char	*getDateTimeStr();
-
-		void	enable32KHz(bool enable);
-		void	setOutput(byte enable);
-		void	setSQWRate(int rate);
-		float	getTemp();
-
+		char	*getTimeStr();
 	private:
 		uint8_t _scl_pin;
 		uint8_t _sda_pin;
