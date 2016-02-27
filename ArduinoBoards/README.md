@@ -11,10 +11,10 @@
 
 [arduino_uno]: 	https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/arduino_uno_r3.jpg "Arduino UNO"
 [arduino_nano]: https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/arduino_nano_v3.jpg "Arduino Nano"
-[teensy_pp_20]: https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/teensy_pp_20.gif "Teensy++ 2.0"
+[teensy_pp_20]: https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/teensy_pp_20.jpg "Teensy++ 2.0"
 [maple_mini]: 	https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/maple_mini.jpg "Maple Mini"
-[nucleo_32]: 	https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/nucleo_32.jpg "Nucleo-32"
-[rasp_pi_zero]: https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/rasp_pi_zero.jpg "Raspberry Pi Zero"
+[nucleo_32]: 	https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/nucleo_32.jpeg "Nucleo-32"
+[rasp_pi_zero]: https://github.com/kopson/SmartLamp/blob/master/ArduinoBoards/rasp_pi_zero.jpeg "Raspberry Pi Zero"
 
 ### References
 [http://www.tablesgenerator.com/markdown_tables]
