@@ -30,6 +30,17 @@ From the **~/Arduino/hardware/Arduino_STM32/tools/src/dfu-util** dir:
 
 now copy **dfu-prefix**, **dfu-suffix** and **dfu-util** from **~/Arduino/hardware/Arduino_STM32/tools/src/dfu-util/src/** to **~/Arduino/hardware/Arduino_STM32/tools/linux/dfu-util/** and overwrite the old ones.
 
+Problem:
+
+Failed to open serial device.
+dfu-util: Invalid DFU suffix signature
+dfu-util: A valid DFU suffix will be required in a future dfu-util release!!!
+dfu-util: No DFU capable USB device available
+
+Solution:
+
+Connect maple to /dev/ttyACM0
+
 ### Links
 
 1. [Arduino home page](https://www.arduino.cc/en/Guide/HomePage)
