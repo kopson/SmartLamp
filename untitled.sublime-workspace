@@ -1,0 +1,245 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"setErr",
+				"setErrMsg"
+			],
+			[
+				"err",
+				"errMsg"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "Packages/User/bash_build.sublime-build",
+	"command_palette":
+	{
+		"height": 75.0,
+		"selected_items":
+		[
+			[
+				"packa",
+				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '2915d1851351e5ee549c20394736b442' + '8bc59f460fa1548d1514676163dafc88'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches/read_address.ino",
+		"/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches/read_temp.ino",
+		"/home/piotrek/Arduino/libraries/DS18B20/keywords.txt",
+		"/home/piotrek/.bashrc",
+		"/home/piotrek/SmartLamp/SmartLamp/README.md",
+		"/home/piotrek/SmartLamp/SmartLamp/SmartLamp/app/app.iml",
+		"/home/piotrek/aaa.html",
+		"/home/piotrek/SmartLamp/SmartLamp/examples/DS3231.ino",
+		"/home/piotrek/Downloads/CPP_workspace/source/main.cpp",
+		"/home/piotrek/Downloads/CPP_workspace/Logger.h",
+		"/home/piotrek/Downloads/cpp.sublime-project",
+		"/home/piotrek/Downloads/CPP_workspace/build.sh",
+		"/home/piotrek/Downloads/CPP_workspace/source/main",
+		"/home/piotrek/Downloads/CPP_workspace/source/Makefile",
+		"/home/piotrek/Downloads/CPP_workspace/source/Utils.cpp",
+		"/home/piotrek/Downloads/image.py",
+		"/home/piotrek/Downloads/requirements.txt",
+		"/home/piotrek/Downloads/CPP_workspace/source/logger.log",
+		"/home/piotrek/Downloads/CPP_workspace/includes/Utils.h",
+		"/home/piotrek/.config/sublime-text-3/Packages/User/bash_build.sublime-build",
+		"/home/piotrek/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/piotrek/Downloads/CPP_workspace/Makefile",
+		"/home/piotrek/Downloads/CPP_workspace/main.cpp",
+		"/home/piotrek/Downloads/CPP_workspace/main",
+		"/home/piotrek/Downloads/CPP_workspace/Utils.h",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/phone/PassionConstants.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/phone/SapphireConstants.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/util/NotificationService.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/components/Audio.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/util/SystemInfo.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/components/Threeg.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/phone/DreamConstants.java",
+		"/home/piotrek/Downloads/PowerTutor/src/edu/umich/PowerTutor/phone/PhoneConstants.java"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/home/piotrek/Downloads/PowerTutor"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"DefaultReceiver",
+			"PrintNotifications",
+			"PowerNotifications",
+			"phoneConstants"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.1455733895.3110526":
+	{
+		"height": 112.0
+	},
+	"output.1455733959.6187398":
+	{
+		"height": 112.0
+	},
+	"output.1455734170.2170138":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches|1455733524.0681355":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches|1455733903.147756":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches|1455734112.9694736":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches|1455734193.6651576":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/piotrek/SmartLamp/SmartLamp/Modules/DS18B20/sketches|1455734227.892924":
+	{
+		"height": 112.0
+	},
+	"output.exec":
+	{
+		"height": 208.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "untitled.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 146.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
